@@ -13,16 +13,23 @@
 
     <tbody>
         @{
-            int counter = 0;
-            foreach (TaskModel task in Model)
+            if (Model == null)
             {
-                <tr>
-                    <td scope="row">@counter</td>
-                    <td>@task.Id</td>
-                    <td>@task.Name</td>
-                    <td>@task.Description</td>
-                </tr>
-                counter += 1;
+                <p>NULL MODEL</p>
+            } 
+            else
+            {
+                int counter = 0;
+                foreach (TaskModel? task in Model)
+                {
+                    <tr>
+                        <td scope="row">@counter</td>
+                        <td>@task.Id</td>
+                        <td>@task.Name</td>
+                        <td>@task.Description</td>
+                    </tr>
+                    counter += 1;
+                }
             }
         }
 

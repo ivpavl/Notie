@@ -1,8 +1,8 @@
 namespace Notie.Models;
 
-public record class TaskModel(int Id, string Name, string Description);
-// {
-//     public int Id;
-//     public string Name;
-//     public string Description;
-// }
+public class TaskModel
+{
+    public int Id {get; set;}
+    public string? Name {get; set;}
+    public string? Description {get; set;}
+}
