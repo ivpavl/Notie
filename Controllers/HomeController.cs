@@ -9,12 +9,12 @@ public class HomeController : Controller
 {
 
 
-    // List<TaskModel> TestTasks = new List<TaskModel> 
-    // {
-    //     new TaskModel{Name = "Hey1", Description = "hehe"},
-    //     new TaskModel{Name = "Hey2", Description = "hehe"},
-    //     new TaskModel{Name = "Hey3", Description = "hehe"},
-    // };
+    List<TaskModel> TestTasks = new List<TaskModel> 
+    {
+        new TaskModel{Name = "Hey1", Description = "hehe"},
+        new TaskModel{Name = "Hey2", Description = "hehe"},
+        new TaskModel{Name = "Hey3", Description = "hehe"},
+    };
     // List<TaskModel> TestTasks = new List<TaskModel> 
     // {
     //     new TaskModel(25, "cha", "he"),
@@ -42,10 +42,10 @@ public class HomeController : Controller
     {
         // TaskModel task1 = new TaskModel{Name = "Hey1", Description = "hehe"};
         // _dbContext.Tasks.Add(task1);
+        // _dbContext.Tasks.Add(new TaskModel{Name="Hey", Description="heh"});
         // _dbContext.SaveChanges();
-
         var tasks = _dbContext.Tasks.ToList();
-
+        // Console.WriteLine(tasks);
         return View(tasks);
     }
 

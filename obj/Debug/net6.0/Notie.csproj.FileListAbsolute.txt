@@ -107,3 +107,5 @@
 /Users/vasek/Desktop/Notie/bin/Debug/net6.0/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll
 /Users/vasek/Desktop/Notie/bin/Debug/net6.0/runtimes/win/lib/netcoreapp3.0/System.Windows.Extensions.dll
 /Users/vasek/Desktop/Notie/obj/Debug/net6.0/Notie.csproj.CopyComplete
+/Users/vasek/Desktop/Notie/bin/Debug/net6.0/MySqlConnector.dll
+/Users/vasek/Desktop/Notie/bin/Debug/net6.0/Pomelo.EntityFrameworkCore.MySql.dll

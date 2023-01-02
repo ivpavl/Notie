@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "pkU2sG7tw44M3JeXYpPH7R+XwVruTTbBcp9Q1n8wOpHw+6+iQpcVDZtMck4kfbQ7K/c8HnUw2P8D9kBcPEKH2Q==",
+  "dgSpecHash": "kSto79dP+aHTUnFeN5k/CkP0lPDCkMn8H+MGHbOJOV5F0GvsSDLawCAa7gA7LJb2p/jOId43MOy/gwgNdzUKqA==",
   "success": true,
   "projectFilePath": "/Users/vasek/Desktop/Notie/Notie.csproj",
   "expectedPackageFiles": [
@@ -45,6 +45,8 @@
     "/Users/vasek/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
+    "/Users/vasek/.nuget/packages/mysqlconnector/2.2.2/mysqlconnector.2.2.2.nupkg.sha512",
+    "/Users/vasek/.nuget/packages/pomelo.entityframeworkcore.mysql/7.0.0-silver.1/pomelo.entityframeworkcore.mysql.7.0.0-silver.1.nupkg.sha512",
     "/Users/vasek/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.2/sqlitepclraw.bundle_e_sqlite3.2.1.2.nupkg.sha512",
     "/Users/vasek/.nuget/packages/sqlitepclraw.core/2.1.2/sqlitepclraw.core.2.1.2.nupkg.sha512",
     "/Users/vasek/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.2/sqlitepclraw.lib.e_sqlite3.2.1.2.nupkg.sha512",

@@ -9,9 +9,11 @@
       "Notie/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.1",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.1",
           "Microsoft.EntityFrameworkCore.Sqlite": "7.0.1",
-          "Microsoft.EntityFrameworkCore.Tools": "7.0.1"
+          "Microsoft.EntityFrameworkCore.Tools": "7.0.1",
+          "Pomelo.EntityFrameworkCore.MySql": "7.0.0-silver.1"
         },
         "runtime": {
           "Notie.dll": {}
@@ -476,6 +478,26 @@
           "lib/netstandard2.0/Mono.TextTemplating.dll": {
             "assemblyVersion": "2.2.0.0",
             "fileVersion": "2.2.1.1"
+          }
+        }
+      },
+      "MySqlConnector/2.2.2": {
+        "runtime": {
+          "lib/net6.0/MySqlConnector.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.2.2.0"
+          }
+        }
+      },
+      "Pomelo.EntityFrameworkCore.MySql/7.0.0-silver.1": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.1",
+          "MySqlConnector": "2.2.2"
+        },
+        "runtime": {
+          "lib/net6.0/Pomelo.EntityFrameworkCore.MySql.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.0.0"
           }
         }
       },
@@ -1172,6 +1194,20 @@
       "sha512": "sha512-KZYeKBET/2Z0gY1WlTAK7+RHTl7GSbtvTLDXEZZojUdAPqpQNDL6tHv7VUpqfX5VEOh+uRGKaZXkuD253nEOBQ==",
       "path": "mono.texttemplating/2.2.1",
       "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
+    },
+    "MySqlConnector/2.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rhy856Z1LrSblkC//OkvLIXBuiLhwlBAwDBrdHJEkIhu3eZRCQQg9sDNpt7eEVXtIFAMyEXkaky0bYpoGKps3g==",
+      "path": "mysqlconnector/2.2.2",
+      "hashPath": "mysqlconnector.2.2.2.nupkg.sha512"
+    },
+    "Pomelo.EntityFrameworkCore.MySql/7.0.0-silver.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bxzfcqZeH2DUEDyydbO5BV9Lk4SjB6q1uwiZQIa9aJwnLHW3IKB128odt5fyKcQ8C8gJH9wC+ievX4CQqRQkLg==",
+      "path": "pomelo.entityframeworkcore.mysql/7.0.0-silver.1",
+      "hashPath": "pomelo.entityframeworkcore.mysql.7.0.0-silver.1.nupkg.sha512"
     },
     "SQLitePCLRaw.bundle_e_sqlite3/2.1.2": {
       "type": "package",
