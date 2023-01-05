@@ -22,14 +22,41 @@
                 foreach (TaskModel? task in Model)
                 {
                     <tr>
-                        <td>@task.Id</td>
+                        <td style="display: flex">
+                            @using(Html.BeginForm("DeleteTask", "Home", FormMethod.Post))
+                            {
+                                    <input name=taskIdRaw type="hidden" value=@task.Id />
+                                    <input type="submit" value="X" />
+                            }
+                            @task.Id
+                        </td>
                         <td>@task.Name</td>
                         <td>@task.Description</td>
                     </tr>
                 }
             }
         }
-
+        @* <form action="~/Home/Tasks/addtask" method='post'>
+                <label>Name:</label><br />
+                <input name='name' /><br />
+                <label>Desctiption:</label><br />
+                <input name='description' /><br />
+                <input type='submit' value='Send' />
+        </form> *@
+        @using(Html.BeginForm("AddTask", "Home", FormMethod.Post))
+        {
+            <p>
+                <label>Name:</label><br />
+                <input type="text" name="name" />
+            </p>
+            <p>
+                <label>Desctiption:</label><br />
+                <input type="text" name="description" />
+            </p>
+            <p>
+                <input type="submit" value="Send" />
+            </p>
+        }
     </tbody>
 
 </table>

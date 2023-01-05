@@ -9,7 +9,7 @@ public class HomeController : Controller
 {
 
 
-    List<TaskModel> TestTasks = new List<TaskModel> 
+    private static List<TaskModel> TestTasks = new List<TaskModel> 
     {
         new TaskModel{Name = "Hey1", Description = "hehe"},
         new TaskModel{Name = "Hey2", Description = "hehe"},
@@ -38,15 +38,46 @@ public class HomeController : Controller
     {
         return View();
     }
+    [HttpGet]
     public IActionResult Tasks()
     {
-        // TaskModel task1 = new TaskModel{Name = "Hey1", Description = "hehe"};
-        // _dbContext.Tasks.Add(task1);
-        // _dbContext.Tasks.Add(new TaskModel{Name="Hey", Description="heh"});
-        // _dbContext.SaveChanges();
-        var tasks = _dbContext.Tasks.ToList();
-        // Console.WriteLine(tasks);
-        return View(tasks);
+        var allTasks = _dbContext.Tasks.ToList();
+
+        return View(allTasks);
+    }
+
+    [HttpPost]
+    public IActionResult DeleteTask(string taskIdRaw)
+    {   
+        Console.WriteLine(taskIdRaw);
+        if (taskIdRaw is not null)
+        { 
+            int taskId = Convert.ToInt32(taskIdRaw);
+            TaskModel deleteTask = _dbContext.Tasks.Find(taskId)!;
+            if (deleteTask is not null)
+            {
+                _dbContext.Tasks.Remove(deleteTask);
+                _dbContext.SaveChanges();
+
+            }
+        }
+
+        List<TaskModel> allTasks = _dbContext.Tasks.ToList();
+
+        return View("Tasks", allTasks);
+    }
+
+    [HttpPost]
+    public IActionResult AddTask(TaskModel task)
+    {   
+        if (task is not null)
+        {
+            _dbContext.Tasks.Add(task);
+            _dbContext.SaveChanges();
+        }
+        List<TaskModel> allTasks = _dbContext.Tasks.ToList();
+
+        return View("Tasks", allTasks);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -6,12 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// builder.Services.AddAuthentication("Bearer").AddJwtBearer();
+// builder.Services.AddAuthorization();
+
 builder.Services.AddDbContext<ApplicationContext>(options => {
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnectionMySQL"), 
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnectionMySQL"))
         );
 });
+
 
 
 var app = builder.Build();
@@ -30,6 +34,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+// app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",

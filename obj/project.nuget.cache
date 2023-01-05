@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "kSto79dP+aHTUnFeN5k/CkP0lPDCkMn8H+MGHbOJOV5F0GvsSDLawCAa7gA7LJb2p/jOId43MOy/gwgNdzUKqA==",
+  "dgSpecHash": "6WdNxUdZDLFKdtV0OLEcIFkTanXsmXeu0ZJNeQZZ5WBwJ0qLzBsI9fpbEhlh8UuwXaiThSOyKSK/oE9UU2y77g==",
   "success": true,
   "projectFilePath": "/Users/vasek/Desktop/Notie/Notie.csproj",
   "expectedPackageFiles": [
     "/Users/vasek/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/Users/vasek/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.12/microsoft.aspnetcore.authentication.jwtbearer.6.0.12.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.data.sqlclient/5.0.1/microsoft.data.sqlclient.5.0.1.nupkg.sha512",

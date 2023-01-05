@@ -1,11 +1,10 @@
 namespace Notie.Models;
 
-public class TaskModel
+public class UserModel
 {
-    public int Id { get; set;}
-    public int UserId { get; set;}
+    public int Id {get; set;}
 
-    private string _name = "Task";
+    private string _name = "User";
     public string Name {
         get
         {
@@ -17,6 +16,5 @@ public class TaskModel
                 _name = value;
         }
     }
-
     public string? Description {get; set;}
 }
