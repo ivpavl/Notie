@@ -109,3 +109,4 @@
 /Users/vasek/Desktop/Notie/obj/Debug/net6.0/Notie.csproj.CopyComplete
 /Users/vasek/Desktop/Notie/bin/Debug/net6.0/MySqlConnector.dll
 /Users/vasek/Desktop/Notie/bin/Debug/net6.0/Pomelo.EntityFrameworkCore.MySql.dll
+/Users/vasek/Desktop/Notie/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -1,26 +1,16 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Notie.Models;
 using Microsoft.EntityFrameworkCore;
+using Notie.Models;
 
 namespace Notie.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
 
 
-    private static List<TaskModel> TestTasks = new List<TaskModel> 
-    {
-        new TaskModel{Name = "Hey1", Description = "hehe"},
-        new TaskModel{Name = "Hey2", Description = "hehe"},
-        new TaskModel{Name = "Hey3", Description = "hehe"},
-    };
-    // List<TaskModel> TestTasks = new List<TaskModel> 
-    // {
-    //     new TaskModel(25, "cha", "he"),
-    //     new TaskModel(25, "bha", "he22"),
-    //     new TaskModel(5, "aha", "he8987")
-    // };
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationContext _dbContext;
     public HomeController(ILogger<HomeController> logger, ApplicationContext context)
@@ -29,19 +19,21 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    [AllowAnonymous]
+    public IActionResult Index() => View();
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-    [HttpGet]
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult Privacy() => View();
+
+
     public IActionResult Tasks()
     {
-        var allTasks = _dbContext.Tasks.ToList();
+        UserModel currentUser = GetLoggedUserModel();
+
+        var allTasks = _dbContext.Tasks
+            .Where(t => t.User == currentUser)
+            .ToList();
 
         return View(allTasks);
     }
@@ -67,22 +59,41 @@ public class HomeController : Controller
         return View("Tasks", allTasks);
     }
 
-    [HttpPost]
+    [HttpPost] 
+    // TODO Переделать проверку модели таски. Добавить соответственно новую модель для проверки
     public IActionResult AddTask(TaskModel task)
     {   
-        if (task is not null)
-        {
-            _dbContext.Tasks.Add(task);
-            _dbContext.SaveChanges();
-        }
-        List<TaskModel> allTasks = _dbContext.Tasks.ToList();
+        UserModel currentUser = GetLoggedUserModel();
+        TaskModel newTask = new TaskModel {Name = task.Name, Description = task.Description, User = currentUser};
 
-        return View("Tasks", allTasks);
+        // if (ModelState.IsValid)
+        // {
+        _dbContext.Tasks.Add(newTask);
+        _dbContext.SaveChanges();
+        // }
+        // List<TaskModel> allTasks = _dbContext.Tasks.ToList();
+
+        return Redirect("Tasks");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+
+
+
+    [NonAction]
+    private UserModel GetLoggedUserModel()
+    {
+        var userName = HttpContext.User.Identity?.Name;
+        UserModel user = _dbContext.Users.FirstOrDefault(u => u.Name == userName)!;
+
+        if (user is null)
+            throw new Exception("Already logged user is not found in DB");
+
+        return user;
     }
 }
