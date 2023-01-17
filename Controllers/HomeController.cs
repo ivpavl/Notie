@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Notie.Models;
+using Notie.Controllers.Common;
+
 
 namespace Notie.Controllers;
 
@@ -29,7 +31,7 @@ public class HomeController : Controller
 
     public IActionResult Tasks()
     {
-        UserModel currentUser = GetLoggedUserModel();
+        UserModel currentUser = AuthHelper.GetLoggedUserModel(HttpContext, _dbContext);
 
         var allTasks = _dbContext.Tasks
             .Where(t => t.User == currentUser)
@@ -63,7 +65,7 @@ public class HomeController : Controller
     // TODO Переделать проверку модели таски. Добавить соответственно новую модель для проверки
     public IActionResult AddTask(TaskModel task)
     {   
-        UserModel currentUser = GetLoggedUserModel();
+        UserModel currentUser = AuthHelper.GetLoggedUserModel(HttpContext, _dbContext);
         TaskModel newTask = new TaskModel {Name = task.Name, Description = task.Description, User = currentUser};
 
         // if (ModelState.IsValid)
@@ -83,17 +85,4 @@ public class HomeController : Controller
     }
 
 
-
-
-    [NonAction]
-    private UserModel GetLoggedUserModel()
-    {
-        var userName = HttpContext.User.Identity?.Name;
-        UserModel user = _dbContext.Users.FirstOrDefault(u => u.Name == userName)!;
-
-        if (user is null)
-            throw new Exception("Already logged user is not found in DB");
-
-        return user;
-    }
 }

@@ -1,5 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace Notie.Models;
 
@@ -15,6 +18,7 @@ public class UserModel
     public ICollection<TaskModel> Tasks { get; set; }
 }
 
+[Index("Name", IsUnique = true)]
 public class Role 
 {
     public int Id {get; set;}

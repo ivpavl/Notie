@@ -39,7 +39,7 @@ builder.Services.AddSession();  // добавляем сервисы сесси�
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     config =>
     {
-        config.LoginPath = "/Auth/Index";
+        config.LoginPath = "/Auth/Login";
         config.AccessDeniedPath = "/Home/Index";
         // config.ExpireTimeSpan = new TimeSpan (0,0,30);
     }

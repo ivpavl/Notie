@@ -7,8 +7,10 @@
     }
 
 }
-@* @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+
+@using (Html.BeginForm("Login", "Auth", FormMethod.Post))
 {
+    <div class="validation" asp-validation-summary="All"></div>
     <p>
         <label>Имя</label><br />
         @Html.TextBoxFor(m => m.Name)
@@ -20,4 +22,4 @@
     <p>
         <input type="submit" value="Отправить" />
     </p>
-} *@
+}

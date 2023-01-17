@@ -1,4 +1,4 @@
-@model Notie.Models.UserModel
+@model Notie.Models.RegisterUserModel
 
 @{
     if (TempData["Message"] is not null)
@@ -7,8 +7,10 @@
     }
 
 }
-@* @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+
+@using (Html.BeginForm("Register", "Auth", FormMethod.Post))
 {
+    <div class="validation" asp-validation-summary="All"></div>
     <p>
         <label>Имя</label><br />
         @Html.TextBoxFor(m => m.Name)
@@ -18,6 +20,10 @@
         @Html.PasswordFor(m => m.Password)
     </p>
     <p>
+        <label>Повторите пароль</label><br />
+        @Html.PasswordFor(m => m.PasswordConfirm)
+    </p>
+    <p>
         <input type="submit" value="Отправить" />
     </p>
-} *@
+}
