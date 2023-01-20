@@ -1,8 +1,9 @@
+using System.Security.Claims;
 using Notie.Models;
+// using Notie.Interfaces;
 
 namespace Notie.Controllers.Common;
-
-public class AuthHelper
+public class UserHelper
 {
     public static UserModel GetLoggedUserModel(HttpContext HttpContext, ApplicationContext dbContext)
     {
@@ -18,5 +19,7 @@ public class AuthHelper
 
         return user;
     }
+
+
 
 }

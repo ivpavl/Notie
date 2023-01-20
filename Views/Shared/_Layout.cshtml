@@ -26,7 +26,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminPage">AdminPage</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Tasks">Tasks</a>
@@ -37,16 +37,27 @@
 
                         @if(User.Identity!.IsAuthenticated)
                         {
-                            <div class="right-menu">
+                            <div style="display: flex; flex-direction: row;">
                             <ul>
                                 <li><a href="#">Hello, @User.Identity.Name!</a></li>
                                 <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
                             </ul>
+                            <div style="padding: 10px 100px">
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="Auth" asp-action="SetRole" asp-route-roleName="User">Make me a regular user!</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Auth" asp-action="SetRole" asp-route-roleName="Admin">Make me an admin!</a>
+                                }
+                            </div>
                         </div>
                         }
+
                         else
                         {
-                            <div class="right-menu">
+                        <div style="display: flex; flex-direction: row;">
                             <ul>
                                 <li><a asp-controller="Auth" asp-action="Login">Login</a></li>
                                 <li><a asp-controller="Auth" asp-action="Register">Register</a></li>

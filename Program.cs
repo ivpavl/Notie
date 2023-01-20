@@ -1,41 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
- 
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDistributedMemoryCache();// добавляем IDistributedMemoryCache
-builder.Services.AddSession();  // добавляем сервисы сессии
 
-// builder.Services.AddAuthentication("Bearer").AddJwtBearer(options => {
-//     options.TokenValidationParameters = new TokenValidationParameters
-//     {
-//         // указывает, будет ли валидироваться издатель при валидации токена
-//         ValidateIssuer = true,
-//         // строка, представляющая издателя
-//         ValidIssuer = AuthOptions.ISSUER,
-//         // будет ли валидироваться потребитель токена
-//         ValidateAudience = true,
-//         // установка потребителя токена
-//         ValidAudience = AuthOptions.AUDIENCE,
-//         // будет ли валидироваться время существования
-//         ValidateLifetime = true,
-//         // установка ключа безопасности
-//         IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-//         // валидация ключа безопасности
-//         ValidateIssuerSigningKey = true,
-//     };
-// });
-// builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     config =>
     {
@@ -45,6 +15,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     }
 );
 builder.Services.AddAuthorization();
+
+
 
 builder.Services.AddDbContext<ApplicationContext>(options => {
     // options.UseSqlite(
@@ -78,18 +50,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-// app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
 app.Run();
-// public class AuthOptions
-// {
-//     public const string ISSUER = "Notie"; // издатель токена
-//     public const string AUDIENCE = "localhost"; // потребитель токена
-//     const string KEY = "key!@#123KEYKEYKEY2828";   // ключ для шифрации
-//     public static SymmetricSecurityKey GetSymmetricSecurityKey() => 
-//         new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
-// }

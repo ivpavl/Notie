@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Notie.Models;
 
+[Index("Name", IsUnique = true)]
 public class UserModel
 {
     public int Id {get; set;}

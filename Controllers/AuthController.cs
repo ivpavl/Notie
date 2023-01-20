@@ -4,6 +4,7 @@ using Notie.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Notie.Controllers.Common;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Notie.Controllers;
 public class AuthController : Controller
@@ -13,8 +14,9 @@ public class AuthController : Controller
     {
         _dbContext = context;
     }
-
     
+    public IActionResult Index() => RedirectToAction("Login");
+
     [HttpGet]
     public IActionResult Login()
     {
@@ -23,15 +25,11 @@ public class AuthController : Controller
         return View();
     }
 
-    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Login(LoginUserModel model)
     {
         if (ModelState.IsValid)
         {
-            // TODO Если пользователей совсем нет, будет ошибка
-            // TODO Если пользователей совсем нет, будет ошибка
-            // TODO Если пользователей совсем нет, будет ошибка
             var userSearchResult = _dbContext.Users
                 .Where(x => model.Name == x.Name && model.Password == x.Password)
                     .Include(u => u.Role)
@@ -39,15 +37,7 @@ public class AuthController : Controller
 
             if (userSearchResult is not null)
             {
-                var claims = new List<Claim> 
-                { 
-                    new Claim(ClaimTypes.Name, userSearchResult.Name),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, userSearchResult.Role.Name)
-                };
-                var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-                await HttpContext.SignInAsync(claimsPrincipal);
-                
+                await SignInUser(userSearchResult, HttpContext);
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -61,11 +51,12 @@ public class AuthController : Controller
     public IActionResult Register()
     {
         if (User.Identity!.IsAuthenticated)
+        {
             return RedirectToAction("Index", "Home");
+        }
         return View();
     }
 
-    [ValidateAntiForgeryToken]
     [HttpPost]
     public async Task<IActionResult> Register(RegisterUserModel model)
     {
@@ -77,30 +68,24 @@ public class AuthController : Controller
                 ModelState.AddModelError("Name", "Имя уже существует");
                 return View();
             }
-            // TODO ИСПРАВИТЬ КОСТЫЛЬ
-            // TODO ИСПРАВИТЬ КОСТЫЛЬ
-            // TODO ИСПРАВИТЬ КОСТЫЛЬ
-            Role userRole = _dbContext.Roles.FirstOrDefault(r => r.Name == "User") ?? new Role {Name = "User"};
 
+            Role userRole = _dbContext.Roles.FirstOrDefault(r => r.Name == "User")!;
+            if (userRole is null)
+            {
+                userRole = new Role { Name = "User" };
+                _dbContext.Roles.Add(userRole);
+            }
 
             UserModel user = new UserModel 
             {
-                Name = model.Name,
-                Password = model.Password,
+                Name = model.Name!,
+                Password = model.Password!,
                 Role = userRole
             };
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
-            var claims = new List<Claim> 
-            { 
-                new Claim(ClaimTypes.Name, model.Name),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, "User")
-            };
-            var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            await HttpContext.SignInAsync(claimsPrincipal);
-
+            await SignInUser(user, HttpContext);
             return RedirectToAction("Index", "Home");
         }
         return View();
@@ -129,24 +114,58 @@ public class AuthController : Controller
             return Json(true);
         }
     }
-    public IActionResult AddToDB()
+    
+    public async Task<IActionResult> SetRole(string roleName)
     {
-
-        Role Admin = new Role { Name = "Admin" };
-        Role User = new Role { Name = "User" };
-
-        var _dbContextMOCK = new List<UserModel> {
-            new UserModel {Name = "123", Password = "123", Role = Admin},
-            new UserModel {Name = "Vasiliy", Password = "123", Role = Admin},
-            new UserModel {Name = "1", Password = "1", Role = User}
-        };
-        // _dbContext.Roles.AddRange(Admin, User);
-        _dbContext.Users.AddRange(_dbContextMOCK);
+        Role userRole = _dbContext.Roles.FirstOrDefault(r => r.Name == roleName)!;
+        if (userRole is null)
+        {
+            userRole = new Role { Name = roleName };
+            _dbContext.Roles.Add(userRole);
+        }
+        UserModel currentUser = UserHelper.GetLoggedUserModel(HttpContext, _dbContext);
+        currentUser.Role = userRole;
 
         _dbContext.SaveChanges();
 
-        return View("Index");
-
+        await SignInUser(currentUser, HttpContext);
+        return RedirectToAction("Index", "Home");
     }
-    
+        // TODO ДОПИСАТЬ ЭТУ КОПИПАСТУ
+
+
+    // private IActionResult AddToDB()
+    // {
+
+    //     Role Admin = new Role { Name = "Admin" };
+    //     Role User = new Role { Name = "User" };
+
+    //     var _dbContextMOCK = new List<UserModel> {
+    //         new UserModel {Name = "123", Password = "123", Role = Admin},
+    //         new UserModel {Name = "Vasiliy", Password = "123", Role = Admin},
+    //         new UserModel {Name = "1", Password = "1", Role = User}
+    //     };
+    //     // _dbContext.Roles.AddRange(Admin, User);
+    //     _dbContext.Users.AddRange(_dbContextMOCK);
+
+    //     _dbContext.SaveChanges();
+
+    //     return View("Index");
+
+    // }
+
+
+
+    private async Task SignInUser(UserModel user, HttpContext httpContext)
+    {
+        var claims = new List<Claim> 
+        { 
+            new Claim(ClaimTypes.Name, user.Name),
+            new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
+        };
+        var claimsIdentity = new ClaimsIdentity(claims, 
+            CookieAuthenticationDefaults.AuthenticationScheme);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+        await httpContext.SignInAsync(claimsPrincipal);
+    }
 }

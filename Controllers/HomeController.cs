@@ -26,12 +26,12 @@ public class HomeController : Controller
 
 
     [Authorize(Roles = "Admin")]
-    public IActionResult Privacy() => View();
+    public IActionResult AdminPage() => View();
 
 
     public IActionResult Tasks()
     {
-        UserModel currentUser = AuthHelper.GetLoggedUserModel(HttpContext, _dbContext);
+        UserModel currentUser = UserHelper.GetLoggedUserModel(HttpContext, _dbContext);
 
         var allTasks = _dbContext.Tasks
             .Where(t => t.User == currentUser)
@@ -43,16 +43,21 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult DeleteTask(string taskIdRaw)
     {   
-        Console.WriteLine(taskIdRaw);
         if (taskIdRaw is not null)
         { 
-            int taskId = Convert.ToInt32(taskIdRaw);
-            TaskModel deleteTask = _dbContext.Tasks.Find(taskId)!;
-            if (deleteTask is not null)
+            try
             {
-                _dbContext.Tasks.Remove(deleteTask);
-                _dbContext.SaveChanges();
-
+                int taskId = Convert.ToInt32(taskIdRaw);
+                TaskModel deleteTask = _dbContext.Tasks.Find(taskId)!;
+                if (deleteTask is not null)
+                {
+                    _dbContext.Tasks.Remove(deleteTask);
+                    _dbContext.SaveChanges();
+                }
+            }
+            catch
+            {
+                // Log                
             }
         }
 
@@ -62,18 +67,17 @@ public class HomeController : Controller
     }
 
     [HttpPost] 
-    // TODO Переделать проверку модели таски. Добавить соответственно новую модель для проверки
     public IActionResult AddTask(TaskModel task)
     {   
-        UserModel currentUser = AuthHelper.GetLoggedUserModel(HttpContext, _dbContext);
-        TaskModel newTask = new TaskModel {Name = task.Name, Description = task.Description, User = currentUser};
+        UserModel currentUser = UserHelper.GetLoggedUserModel(HttpContext, _dbContext);
+        TaskModel newTask = new TaskModel {
+            Name = task.Name,
+            Description = task.Description,
+            User = currentUser
+            };
 
-        // if (ModelState.IsValid)
-        // {
         _dbContext.Tasks.Add(newTask);
         _dbContext.SaveChanges();
-        // }
-        // List<TaskModel> allTasks = _dbContext.Tasks.ToList();
 
         return Redirect("Tasks");
     }
