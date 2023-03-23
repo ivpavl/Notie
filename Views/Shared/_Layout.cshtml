@@ -26,11 +26,45 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AdminPage">AdminPage</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Tasks">Tasks</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Index">Auth</a>
+                        </li>
+
+                        @if(User.Identity!.IsAuthenticated)
+                        {
+                            <div style="display: flex; flex-direction: row;">
+                            <ul>
+                                <li><a href="#">Hello, @User.Identity.Name!</a></li>
+                                <li><a asp-controller="Auth" asp-action="Logout">Logout</a></li>
+                            </ul>
+                            <div style="padding: 10px 100px">
+                                @if(User.IsInRole("Admin"))
+                                {
+                                    <a asp-controller="Auth" asp-action="SetRole" asp-route-roleName="User">Make me a regular user!</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Auth" asp-action="SetRole" asp-route-roleName="Admin">Make me an admin!</a>
+                                }
+                            </div>
+                        </div>
+                        }
+
+                        else
+                        {
+                        <div style="display: flex; flex-direction: row;">
+                            <ul>
+                                <li><a asp-controller="Auth" asp-action="Login">Login</a></li>
+                                <li><a asp-controller="Auth" asp-action="Register">Register</a></li>
+                            </ul>
+                        </div>
+                        }
+
 
                     </ul>
                 </div>
@@ -53,5 +87,11 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
+    @* Для клиентской проверки модели *@
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

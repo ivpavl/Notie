@@ -1,0 +1,29 @@
+@model Notie.Models.RegisterUserModel
+
+@{
+    if (TempData["Message"] is not null)
+    {
+        <b style="color: red">@TempData["Message"]</b>
+    }
+
+}
+
+@using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+{
+    <div class="validation" asp-validation-summary="All"></div>
+    <p>
+        <label>Имя</label><br />
+        @Html.TextBoxFor(m => m.Name)
+    </p>
+    <p>
+        <label>Пароль</label><br />
+        @Html.PasswordFor(m => m.Password)
+    </p>
+    <p>
+        <label>Повторите пароль</label><br />
+        @Html.PasswordFor(m => m.PasswordConfirm)
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+}

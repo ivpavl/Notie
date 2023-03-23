@@ -1,14 +1,33 @@
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+    config =>
+    {
+        config.LoginPath = "/Auth/Login";
+        config.AccessDeniedPath = "/Home/Index";
+        // config.ExpireTimeSpan = new TimeSpan (0,0,30);
+    }
+);
+builder.Services.AddAuthorization();
+
+
+
 builder.Services.AddDbContext<ApplicationContext>(options => {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // options.UseSqlite(
+    //     builder.Configuration.GetConnectionString("DefaultConnectionSQLite")
+    //     );
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnectionMySQL"), 
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnectionMySQL"))
+        );
 });
+
 
 
 var app = builder.Build();
@@ -21,15 +40,20 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Tasks}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
 
 app.Run();

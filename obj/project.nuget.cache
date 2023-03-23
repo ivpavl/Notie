@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "pkU2sG7tw44M3JeXYpPH7R+XwVruTTbBcp9Q1n8wOpHw+6+iQpcVDZtMck4kfbQ7K/c8HnUw2P8D9kBcPEKH2Q==",
+  "dgSpecHash": "6WdNxUdZDLFKdtV0OLEcIFkTanXsmXeu0ZJNeQZZ5WBwJ0qLzBsI9fpbEhlh8UuwXaiThSOyKSK/oE9UU2y77g==",
   "success": true,
   "projectFilePath": "/Users/vasek/Desktop/Notie/Notie.csproj",
   "expectedPackageFiles": [
     "/Users/vasek/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/Users/vasek/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/6.0.12/microsoft.aspnetcore.authentication.jwtbearer.6.0.12.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.bcl.asyncinterfaces/1.1.1/microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.data.sqlclient/5.0.1/microsoft.data.sqlclient.5.0.1.nupkg.sha512",
@@ -45,6 +46,8 @@
     "/Users/vasek/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "/Users/vasek/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
+    "/Users/vasek/.nuget/packages/mysqlconnector/2.2.2/mysqlconnector.2.2.2.nupkg.sha512",
+    "/Users/vasek/.nuget/packages/pomelo.entityframeworkcore.mysql/7.0.0-silver.1/pomelo.entityframeworkcore.mysql.7.0.0-silver.1.nupkg.sha512",
     "/Users/vasek/.nuget/packages/sqlitepclraw.bundle_e_sqlite3/2.1.2/sqlitepclraw.bundle_e_sqlite3.2.1.2.nupkg.sha512",
     "/Users/vasek/.nuget/packages/sqlitepclraw.core/2.1.2/sqlitepclraw.core.2.1.2.nupkg.sha512",
     "/Users/vasek/.nuget/packages/sqlitepclraw.lib.e_sqlite3/2.1.2/sqlitepclraw.lib.e_sqlite3.2.1.2.nupkg.sha512",

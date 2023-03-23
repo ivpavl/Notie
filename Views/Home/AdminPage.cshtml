@@ -1,0 +1,9 @@
+@{
+    if (TempData["Message"] is not null)
+    {
+        <b style="color: red">@TempData["Message"]</b>
+    }
+
+}
+
+<h1>You are Admin, @User.Identity!.Name!</h1>
